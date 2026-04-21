@@ -1,0 +1,10 @@
+\begin{tabular}{lccrr}
+\toprule
+Model & HR@10 & NDCG@10 & Parameters & Reduction \\
+\midrule
+Teacher (best NeuMF) & 0.6491 $\pm$ 0.0111 & 0.3902 $\pm$ 0.0072 & 107,761 & 0.0\% \\
+Student 1: response-based KD & 0.6550 $\pm$ 0.0098 & 0.3783 $\pm$ 0.0070 & 53,177 & 50.7\% \\
+Student 2: feature-based KD (FitNets) & 0.5815 $\pm$ 0.0170 & 0.3302 $\pm$ 0.0118 & 53,177 & 50.7\% \\
+Student 3: relation-based KD (RKD) & 0.6296 $\pm$ 0.0140 & 0.3643 $\pm$ 0.0079 & 53,177 & 50.7\% \\
+\bottomrule
+\end{tabular}

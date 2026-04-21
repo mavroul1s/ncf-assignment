@@ -281,26 +281,30 @@ def fig_task12():
     order = ["teacher", "response", "feature", "relation"]
     stats["order"] = stats["technique"].apply(lambda t: order.index(t))
     stats = stats.sort_values("order").reset_index(drop=True)
-    labels = [t + f"\n({int(p):,} params)"
+    # Use shorter labels and put parameter count underneath on a second line.
+    pretty = {"teacher": "teacher", "response": "response",
+              "feature": "feature", "relation": "relation"}
+    labels = [f"{pretty[t]}\n({int(p/1000):,}K params)"
               for t, p in zip(stats["technique"], stats["num_parameters"])]
 
-    fig, axes = plt.subplots(1, 2, figsize=(9, 3.8))
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.2))
     x = np.arange(len(stats))
-
     colors = ["#4c72b0", "#c44e52", "#55a868", "#8172b2"]
-    axes[0].bar(x, stats["HR10_mean"], yerr=stats["HR10_std"], capsize=4,
-                color=colors[:len(stats)], edgecolor="black", linewidth=0.5)
-    axes[0].set_xticks(x)
-    axes[0].set_xticklabels(labels, fontsize=9)
-    axes[0].set_ylabel("HR@10")
-    axes[0].set_title("HR@10 (teacher vs students)")
 
-    axes[1].bar(x, stats["NDCG10_mean"], yerr=stats["NDCG10_std"], capsize=4,
-                color=colors[:len(stats)], edgecolor="black", linewidth=0.5)
-    axes[1].set_xticks(x)
-    axes[1].set_xticklabels(labels, fontsize=9)
-    axes[1].set_ylabel("NDCG@10")
-    axes[1].set_title("NDCG@10 (teacher vs students)")
+    for ax, metric_mean, metric_std, ylabel, title in [
+        (axes[0], "HR10_mean", "HR10_std",  "HR@10",   "HR@10 (teacher vs students)"),
+        (axes[1], "NDCG10_mean", "NDCG10_std", "NDCG@10", "NDCG@10 (teacher vs students)"),
+    ]:
+        ax.bar(x, stats[metric_mean], yerr=stats[metric_std], capsize=4,
+               color=colors[:len(stats)], edgecolor="black", linewidth=0.5)
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, fontsize=9)
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        # Put the bar values above the bars for readability.
+        for xi, m in zip(x, stats[metric_mean]):
+            ax.text(xi, m, f"{m:.3f}", ha="center", va="bottom", fontsize=8)
+        ax.margins(y=0.15)
 
     fig.tight_layout()
     _save(fig, "fig_task12_kd")

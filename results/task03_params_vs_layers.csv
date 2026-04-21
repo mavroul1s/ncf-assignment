@@ -1,0 +1,4 @@
+num_layers,total_parameters,gmf_user_embed,gmf_item_embed,mlp_user_embed,mlp_item_embed,mlp_layer_sizes
+1,107121,7544,13456,30176,53824,[32]
+2,107633,7544,13456,30176,53824,"[32, 16]"
+3,107761,7544,13456,30176,53824,"[32, 16, 8]"
