@@ -233,4 +233,4 @@ Three distinct distillation techniques are implemented:
 
 ## Author
 
-**Nikos Mavros** — AEM 03741 — [nmavros@uth.gr](mailto:nmavros@uth.gr)
+**Nikos Mavros** — [nmavros@uth.gr](mailto:nmavros@uth.gr)
